@@ -9,9 +9,11 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.jesse.share.obj.ShareObj;
 
 public class Test {
 
@@ -19,37 +21,19 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		try {
 			URL url = new URL(
-					"http://hq.sinajs.cn/rn=1390043701224&list=sz000078,bk_new_sybh");
+					"http://hq.sinajs.cn/rn=1390043701224&list=sz002556");
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//			con.addRequestProperty(
-//					"User-Agent",
-//					"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36 CoolNovo/2.0.9.20");
-			// con.connect();
 			InputStream is = con.getInputStream();
-			System.out.println(con.getResponseCode());
-			System.out.println(con.getResponseMessage());
-			// Map<String, List<String>> map = con.getHeaderFields();
-			// Set<Map.Entry<String, List<String>>> set = map.entrySet();
-			// for (Entry<String, List<String>> entry : set) {
-			// System.out.println(entry.getKey());
-			// System.out.println(entry.getValue().get(0));
-			// }
-			// BufferedReader br = new java.io.BufferedReader(
-			// new java.io.InputStreamReader(is));
-			// System.out.println(br.readLine());
-			// br.close();
-			ByteBuffer bb = ByteBuffer.allocate(374);
+			ByteBuffer bb = ByteBuffer.allocate(1024);
 			ReadableByteChannel cha = Channels.newChannel(is);
 			cha.read(bb);
 			bb.flip();
-			System.out.println(decode(bb));
+			String str = decode(bb);
 			cha.close();
-			// System.out.println();
+			System.out.println(str2obj(str, "sh601101"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -67,6 +51,24 @@ public class Test {
 			ex.printStackTrace();
 			return "";
 		}
+	}
+	
+	public static ShareObj str2obj(String str, String shareNo){
+		int st = str.indexOf("\"");
+		int ed = str.indexOf("\"", st + 1);
+		if(ed - st == 1){
+			return null;
+		}
+		str = str.substring(st + 1, ed);
+		String[] arr = str.split(",");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date nowTime = null;
+		try {
+			nowTime = sdf.parse(arr[arr.length-3] + " " + arr[arr.length-2]);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return new ShareObj(shareNo, arr[0], Double.parseDouble(arr[3]), Double.parseDouble(arr[2]), nowTime);
 	}
 
 }
