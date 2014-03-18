@@ -23,7 +23,7 @@ public class Test {
 	public static void main(String[] args) {
 		try {
 			URL url = new URL(
-					"http://hq.sinajs.cn/rn=1390043701224&list=sz002556");
+					"http://hq.sinajs.cn/rn=1390043701224&list=sh601101");
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			InputStream is = con.getInputStream();
 			ByteBuffer bb = ByteBuffer.allocate(1024);

@@ -3,3 +3,5 @@
 /WebRoot/WEB-INF/classes/com/jesse/share/servlet/*.class
 
 *.class
+
+classes
