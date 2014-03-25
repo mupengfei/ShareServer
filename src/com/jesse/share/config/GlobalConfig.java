@@ -7,7 +7,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.jesse.share.servlet.InitServlet;
+
 public class GlobalConfig {
+	private Logger logger = LogManager.getLogger(GlobalConfig.class.getName());  
 	private static final String CONFIG_FILE_PATH = "WEB-INF" + File.separator + "config" + File.separator +  "GlobalConfig.properties";
 	private final Properties properties = new Properties();
 
@@ -28,9 +34,9 @@ public class GlobalConfig {
 			properties.load(in);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.catching(e1);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.catching(e);
 		}
 	}
 
