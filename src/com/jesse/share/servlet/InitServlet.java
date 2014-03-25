@@ -54,6 +54,7 @@ public class InitServlet extends HttpServlet {
 			scheduler.start(); 
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
+			logger.catching(e);
 			logger.error(e.getLocalizedMessage());
 		}
 		
