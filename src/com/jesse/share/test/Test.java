@@ -23,7 +23,7 @@ public class Test {
 	public static void main(String[] args) {
 		try {
 			URL url = new URL(
-					"http://hq.sinajs.cn/rn=1390043701224&list=sh601101");
+					"http://hq.sinajs.cn/rn=1390043701224&list=sz000901");
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			InputStream is = con.getInputStream();
 			ByteBuffer bb = ByteBuffer.allocate(1024);
@@ -32,7 +32,7 @@ public class Test {
 			bb.flip();
 			String str = decode(bb);
 			cha.close();
-			System.out.println(str2obj(str, "sh601101"));
+			System.out.println(str2obj(str, "sz000901"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
