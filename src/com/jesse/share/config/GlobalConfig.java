@@ -8,14 +8,13 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.jesse.share.servlet.InitServlet;
+import org.apache.logging.log4j.Logger; 
 
 public class GlobalConfig {
 	private Logger logger = LogManager.getLogger(GlobalConfig.class.getName());  
-	private static final String CONFIG_FILE_PATH = "WEB-INF" + File.separator + "config" + File.separator +  "GlobalConfig.properties";
+	private static final String CONFIG_FILE_PATH = "WEB-INF" + File.separator + "config" + File.separator;
 	private final Properties properties = new Properties();
+	private final Properties sqls = new Properties();
 
 	public static GlobalConfig getInstance() {
 		return GlobalConfig.GlobalConfigHolder.instance;
@@ -30,8 +29,10 @@ public class GlobalConfig {
 		try {
 			String rootUrl = GlobalConfig.class.getResource("/").getPath().replace("%20", " ");
 			String realPath = rootUrl.substring(0, rootUrl.indexOf("WEB-INF")) + CONFIG_FILE_PATH;
-			in = new FileInputStream(realPath);
+			in = new FileInputStream(realPath + "GlobalConfig.properties");
 			properties.load(in);
+			in = new FileInputStream(realPath + "GlobalSql.sql");
+			sqls.load(in);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			logger.catching(e1);
@@ -42,5 +43,9 @@ public class GlobalConfig {
 
 	public String get(String key) {
 		return properties.getProperty(key);
+	}
+
+	public String getSql(String key) {
+		return sqls.getProperty(key);
 	}
 }
