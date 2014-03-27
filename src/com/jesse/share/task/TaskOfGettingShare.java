@@ -10,7 +10,10 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.jesse.share.obj.ShareObj;
+import com.jesse.share.obj.ShareUtil;
 import com.jesse.share.obj.UserShareList;
+import com.jesse.share.utils.ShareGetting;
 
 public class TaskOfGettingShare implements Job {
 	private Logger logger = LogManager.getLogger(TaskOfGettingShare.class
@@ -32,7 +35,10 @@ public class TaskOfGettingShare implements Job {
 				String shareNo = shareIterator.next();
 				if (!tmpSet.contains(shareNo)) {
 					// TODO
+					ShareObj share = ShareGetting.getShareFromServer(shareNo);
+					ShareUtil.insertShareInfo(share);
 					tmpSet.add(shareNo);
+					logger.info(share);
 				}
 			}
 		}
