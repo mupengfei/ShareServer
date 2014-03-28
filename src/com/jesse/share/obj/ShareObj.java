@@ -8,7 +8,11 @@ public class ShareObj {
 	private double nowPrice;
 	private double yesterdayPrice;
 	private Date nowTime;
-
+	
+	private ShareObj(){
+		
+	}
+	
 	public ShareObj(String shareNo, String sharename, double nowPrice, double yesterdayPrice,
 			Date nowTime) {
 		super();
